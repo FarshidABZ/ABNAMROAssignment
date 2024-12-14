@@ -22,9 +22,6 @@ dependencyResolutionManagement {
 rootProject.name = "ABNAMROAssignment"
 include(":app")
 include(":core:base")
-include(":core:model")
-include(":core:network")
-include(":core:database")
 include(":core:data")
 include(":core:domain")
 include(":core:designsystem")

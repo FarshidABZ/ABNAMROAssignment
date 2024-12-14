@@ -10,9 +10,10 @@ androidxRoom = "2.6.1"
 androidxCoreKtx = "1.15.0"
 
 #Kotlin
-kotlin = "2.0.0"
+kotlin = "2.1.0"
 kotlinxCoroutines = "1.9.0"
-ksp = "2.0.0-1.0.22"
+ksp = "2.1.0-1.0.29"
+kotlinxSerializationJson = "1.6.3"
 
 #Compose
 androidxComposeBom = "2024.12.01"
@@ -31,6 +32,8 @@ androidxAppCompat = "1.7.0"
 coil = "2.6.0"
 androidxNavigation = "2.8.5"
 retrofit = "2.11.0"
+retrofit-kotlin-serialization = "1.0.0"
+okhttp = "4.12.0"
 
 #Test
 junit = "4.13.2"
@@ -42,6 +45,7 @@ turbine = "1.2.0"
 ## Kotlin
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
 ## Compose
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
@@ -74,10 +78,16 @@ androidx-room-testing = { group = "androidx.room", name = "room-testing", versio
 androidx-constraintLayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintLayout" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppCompat" }
 
+## Network
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofit-kotlin-serialization" }
+okhttp-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref = "okhttp" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp" }
+okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor" }
+okhttp-mock-server = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "okhttp" }
 
 ## Other
 coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 
 ## Test
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -87,6 +97,7 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
 [plugins]
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
