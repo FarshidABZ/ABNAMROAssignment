@@ -11,6 +11,7 @@ internal object MockTestData {
         fullName = "fullRepo",
         description = "description",
         ownerAvatarUrl = "avatarUrl",
+        ownerName = "ownerName",
         visibility = "public",
         isPrivate = false,
         htmlUrl = "htmlUrl"

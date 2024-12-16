@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="repo_list">Repositories</string>
+    <string name="visibility">Visibility: %s</string>
+    <string name="isPrivate">Private: %s</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="_public_">Public</string>
+    <string name="_private_">Private</string>
+</resources>

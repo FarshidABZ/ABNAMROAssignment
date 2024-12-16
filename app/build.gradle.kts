@@ -44,6 +44,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:designsystem"))
+    implementation(project(":feature:repolist"))
+    implementation(project(":feature:repodetail"))
+
 //    compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.activity)
@@ -52,7 +56,7 @@ dependencies {
 
 //    Hilt
     implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation)
+    implementation(libs.hilt.navigation)
     implementation(libs.androidx.core.ktx)
     ksp(libs.hilt.compiler)
 

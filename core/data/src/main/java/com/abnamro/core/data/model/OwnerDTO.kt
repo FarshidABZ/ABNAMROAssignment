@@ -8,4 +8,6 @@ import kotlinx.serialization.Serializable
 data class OwnerDTO(
     @SerialName("avatar_url")
     val avatarUrl: String?,
+    @SerialName("login")
+    val ownerName: String?
 ) : DataModel

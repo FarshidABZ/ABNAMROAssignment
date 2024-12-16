@@ -25,7 +25,7 @@ class RepoEntityMapperTest {
             name = "CachedRepo",
             fullName = "fullRepo",
             description = "description",
-            owner = OwnerDTO("avatarUrl"),
+            owner = OwnerDTO("avatarUrl", ownerName = "ownerName"),
             visibility = VisibilityState.PUBLIC.name.lowercase(),
             private = false,
             htmlUrl = "htmlUrl"
@@ -48,7 +48,7 @@ class RepoEntityMapperTest {
             name = "CachedRepo",
             fullName = "fullRepo",
             description = "description",
-            owner = OwnerDTO("avatarUrl"),
+            owner = OwnerDTO("avatarUrl", ownerName = "ownerName"),
             visibility = VisibilityState.PRIVATE.name.lowercase(),
             private = true,
             htmlUrl = "htmlUrl"
@@ -72,7 +72,7 @@ class RepoEntityMapperTest {
             name = "CachedRepo",
             fullName = "fullRepo",
             description = "description",
-            owner = OwnerDTO("avatarUrl"),
+            owner = OwnerDTO("avatarUrl", ownerName = "ownerName"),
             visibility = VisibilityState.INTERNAL.name.lowercase(),
             private = true,
             htmlUrl = "htmlUrl"

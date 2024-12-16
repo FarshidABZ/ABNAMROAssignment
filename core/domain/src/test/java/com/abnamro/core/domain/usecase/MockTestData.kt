@@ -11,6 +11,7 @@ object MockTestData {
             fullName = "abnamrocoesd/Repo1",
             description = "Sample repo",
             ownerAvatarUrl = "http://avatar.url",
+            ownerName = "ownerName",
             visibility = VisibilityState.PUBLIC,
             isPrivate = false,
             htmlUrl = "http://html.url"

@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.android)
 }
 
@@ -33,7 +34,16 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
+
+    api(platform(libs.androidx.compose.bom))
+    api(libs.androidx.compose.material3)
+    api(libs.androidx.compose.material)
+    api(libs.androidx.compose.ui)
+    api(libs.androidx.compose.ui.tooling.preview)
+    api(libs.androidx.constraintLayout.compose)
+    api(libs.androidx.appcompat)
+    api(libs.coil)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
 }

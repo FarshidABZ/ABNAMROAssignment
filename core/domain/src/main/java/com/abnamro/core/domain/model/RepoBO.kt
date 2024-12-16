@@ -8,6 +8,7 @@ data class RepoBO(
     val fullName: String?,
     val description: String?,
     val ownerAvatarUrl: String?,
+    val ownerName: String?,
     val visibility: VisibilityState?,
     val isPrivate: Boolean?,
     val htmlUrl: String?

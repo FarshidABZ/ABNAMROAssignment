@@ -16,6 +16,7 @@ internal object MockTestData {
             fullName = "UpdatedFullRepo",
             description = "description",
             ownerAvatarUrl = "avatarUrl",
+            ownerName = "ownerName",
             visibility = "public",
             isPrivate = false,
             htmlUrl = "htmlUrl"
@@ -26,7 +27,7 @@ internal object MockTestData {
         name = "NewRepo",
         fullName = "fullRepo",
         description = "description",
-        owner = OwnerDTO(avatarUrl = "avatarUrl"),
+        owner = OwnerDTO(avatarUrl = "avatarUrl", ownerName = "ownerName"),
         visibility = "public",
         private = false,
         htmlUrl = "htmlUrl"
@@ -38,6 +39,7 @@ internal object MockTestData {
         fullName = "fullRepo",
         description = "description",
         ownerAvatarUrl = "avatarUrl",
+        ownerName = "ownerName",
         visibility = "public",
         isPrivate = false,
         htmlUrl = "htmlUrl"

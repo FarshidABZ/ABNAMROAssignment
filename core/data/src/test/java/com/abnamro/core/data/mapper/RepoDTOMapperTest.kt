@@ -26,6 +26,7 @@ class RepoDTOMapperTest {
             fullName = "fullRepo",
             description = "description",
             ownerAvatarUrl = "avatarUrl",
+            ownerName = "ownerName",
             visibility = VisibilityState.PUBLIC,
             isPrivate = false,
             htmlUrl = "htmlUrl"
@@ -48,6 +49,7 @@ class RepoDTOMapperTest {
             name = "NewRepo",
             fullName = "fullRepo",
             description = "description",
+            ownerName = "ownerName",
             ownerAvatarUrl = "avatarUrl",
             visibility = VisibilityState.PRIVATE,
             isPrivate = true,
@@ -71,6 +73,7 @@ class RepoDTOMapperTest {
             name = "NewRepo",
             fullName = "fullRepo",
             description = "description",
+            ownerName = "ownerName",
             ownerAvatarUrl = "avatarUrl",
             visibility = VisibilityState.INTERNAL,
             isPrivate = true,
