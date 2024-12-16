@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.abnamro.feature.itemlist"
+    namespace = "com.abnamro.feature.repodetail"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

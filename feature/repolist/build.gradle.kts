@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.abnamro.feature.itemdetail"
+    namespace = "com.abnamro.feature.repolist"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
