@@ -3,27 +3,26 @@ package com.abnamro.core.data.mapper
 import com.abnamro.core.data.MockTestData.givenInternalRepo
 import com.abnamro.core.data.MockTestData.givenPrivateRepo
 import com.abnamro.core.data.MockTestData.givenPublicRepo
+import com.abnamro.core.data.model.toDomain
 import com.abnamro.core.domain.model.RepoBO
 import com.abnamro.core.domain.model.VisibilityState
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 
-class RepoMapperTest {
-    private var repoMapper = RepoMapper()
-
+class RepoDTOMapperTest {
     @Test
     fun `given public repo, map correctly to RepoBO`() {
         // Given
         val repoDTO = givenPublicRepo()
 
         // When
-        val repoBO = repoMapper.map(repoDTO)
+        val repoBO = repoDTO.toDomain()
 
         // Then
         val expectedRepoBO = RepoBO(
             id = repoBO.id,
-            name = "repo",
+            name = "NewRepo",
             fullName = "fullRepo",
             description = "description",
             ownerAvatarUrl = "avatarUrl",
@@ -41,12 +40,12 @@ class RepoMapperTest {
         val repoDTO = givenPrivateRepo()
 
         // When
-        val repoBO = repoMapper.map(repoDTO)
+        val repoBO = repoDTO.toDomain()
 
         // Then
         val expectedRepoBO = RepoBO(
             id = repoBO.id,
-            name = "repo",
+            name = "NewRepo",
             fullName = "fullRepo",
             description = "description",
             ownerAvatarUrl = "avatarUrl",
@@ -64,12 +63,12 @@ class RepoMapperTest {
         val repoDTO = givenInternalRepo()
 
         // When
-        val repoBO = repoMapper.map(repoDTO)
+        val repoBO = repoDTO.toDomain()
 
         // Then
         val expectedRepoBO = RepoBO(
             id = repoBO.id,
-            name = "repo",
+            name = "NewRepo",
             fullName = "fullRepo",
             description = "description",
             ownerAvatarUrl = "avatarUrl",

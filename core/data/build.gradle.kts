@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
     testImplementation(libs.okhttp.mock.server)
     testImplementation(libs.androidx.test.ext.junit)
 

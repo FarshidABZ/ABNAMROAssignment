@@ -13,7 +13,7 @@ import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import com.abnamro.core.data.MockTestData.givenRepoEntity
-import com.abnamro.core.data.MockTestData.givenRepoEntityListList
+import com.abnamro.core.data.MockTestData.givenRepoEntityList
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -63,7 +63,7 @@ class RepoDaoTest {
 
     @Test
     fun insertRepos_getAll_verifyAllAddedAndExist() = runTest {
-        val repos = givenRepoEntityListList()
+        val repos = givenRepoEntityList()
 
         repoDao.insertRepos(repos)
         val result = repoDao.getAllRepos().firstOrNull()
@@ -76,7 +76,7 @@ class RepoDaoTest {
 
     @Test
     fun clearRepos_verifyClearsAllData() = runTest {
-        val repos = givenRepoEntityListList()
+        val repos = givenRepoEntityList()
         repoDao.insertRepos(repos)
 
         repoDao.clearRepos()

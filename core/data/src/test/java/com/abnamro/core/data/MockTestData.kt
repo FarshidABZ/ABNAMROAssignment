@@ -6,11 +6,24 @@ import com.abnamro.core.data.model.RepoDTO
 
 internal object MockTestData {
     fun givenRepoList() = listOf(givenPublicRepo(), givenPrivateRepo())
-    fun givenRepoEntityListList() = listOf(givenPublicRepoEntity(), givenPrivateRepoEntity())
+    fun givenRepoEntityList() = listOf(givenPublicRepoEntity(), givenPrivateRepoEntity())
+    fun givenUpdatedRepoEntity() = listOf(updatedRepoEntity())
+
+    fun updatedRepoEntity() =
+        RepoEntity(
+            id = 1,
+            name = "UpdatedRepo",
+            fullName = "UpdatedFullRepo",
+            description = "description",
+            ownerAvatarUrl = "avatarUrl",
+            visibility = "public",
+            isPrivate = false,
+            htmlUrl = "htmlUrl"
+        )
 
     fun givenRepo() = RepoDTO(
         id = 10,
-        name = "repo",
+        name = "NewRepo",
         fullName = "fullRepo",
         description = "description",
         owner = OwnerDTO(avatarUrl = "avatarUrl"),
@@ -21,7 +34,7 @@ internal object MockTestData {
 
     fun givenRepoEntity() = RepoEntity(
         id = 10,
-        name = "repo",
+        name = "CachedRepo",
         fullName = "fullRepo",
         description = "description",
         ownerAvatarUrl = "avatarUrl",

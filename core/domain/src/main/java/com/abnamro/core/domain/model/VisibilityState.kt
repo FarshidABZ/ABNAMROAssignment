@@ -6,7 +6,7 @@ enum class VisibilityState {
     INTERNAL
 }
 
-fun String.getVisibilityType(): VisibilityState {
+fun String?.getVisibilityType(): VisibilityState {
     return when (this) {
         "public" -> VisibilityState.PUBLIC
         "private" -> VisibilityState.PRIVATE

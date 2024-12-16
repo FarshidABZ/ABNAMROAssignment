@@ -3,7 +3,7 @@ package com.abnamro.core.data
 import com.abnamro.core.data.database.model.RepoEntity
 
 internal object MockTestData {
-    fun givenRepoEntityListList() = listOf(givenPublicRepoEntity(), givenPrivateRepoEntity())
+    fun givenRepoEntityList() = listOf(givenPublicRepoEntity(), givenPrivateRepoEntity())
 
     fun givenRepoEntity() = RepoEntity(
         id = 10,

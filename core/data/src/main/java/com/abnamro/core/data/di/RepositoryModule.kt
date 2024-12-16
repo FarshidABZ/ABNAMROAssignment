@@ -1,6 +1,6 @@
 package com.abnamro.core.data.di
 
-import com.abnamro.core.data.mapper.RepoMapper
+import com.abnamro.core.data.database.RepoDao
 import com.abnamro.core.data.network.api.GithubApiService
 import com.abnamro.core.data.repository.RepoRepositoryImpl
 import com.abnamro.core.domain.repository.RepoRepository
@@ -10,7 +10,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-
 @Module
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
@@ -18,7 +17,7 @@ object RepositoryModule {
     @Singleton
     fun provideRepository(
         remoteDataSource: GithubApiService,
-        repoMapper: RepoMapper,
+        localDataSource: RepoDao,
     ): RepoRepository =
-        RepoRepositoryImpl(remoteDataSource, repoMapper)
+        RepoRepositoryImpl(remoteDataSource, localDataSource)
 }
