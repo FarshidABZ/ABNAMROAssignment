@@ -3,6 +3,7 @@ package com.abnamro.core.data.di
 import android.content.Context
 import androidx.room.Room
 import com.abnamro.core.data.database.AppDatabase
+import com.abnamro.core.data.database.RemoteKeyDao
 import com.abnamro.core.data.database.RepoDao
 import dagger.Module
 import dagger.Provides
@@ -15,7 +16,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal object DatabaseModule {
     @Provides
-    fun provideDao(database: AppDatabase): RepoDao = database.dao()
+    fun provideRepoDao(database: AppDatabase): RepoDao = database.repoDao
+
+    @Provides
+    fun provideRemoteKetDao(database: AppDatabase): RemoteKeyDao = database.remoteKeyDao
 
     @Provides
     @Singleton

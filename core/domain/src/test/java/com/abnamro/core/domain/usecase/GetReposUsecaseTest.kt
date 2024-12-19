@@ -23,15 +23,15 @@ class GetReposUsecaseTest {
         // Given
         val repoList = givenRepoList()
 
-        coEvery { repository.getRepos(any(), any()) } returns
+        coEvery { repository.getRepos(any()) } returns
                 flowOf(Result.Success(repoList))
 
         // When
-        val flow = getReposUsecase(page = 1, perPage = 10)
+        val flow = getReposUsecase(1)
 
         // Then
         verify(exactly = 1) {
-            repository.getRepos(any(), any())
+            repository.getRepos(any())
         }
 
         flow.test {
@@ -46,7 +46,7 @@ class GetReposUsecaseTest {
     fun `when repository returns error, usecase emits error`() = runTest {
         // Given
         val exception = RuntimeException("Network error")
-        coEvery { repository.getRepos(any(), any()) } returns flowOf(
+        coEvery { repository.getRepos(any()) } returns flowOf(
             Result.Error(
                 exception,
                 NetworkErrorType.NETWORK_ERROR
@@ -54,7 +54,7 @@ class GetReposUsecaseTest {
         )
 
         // When
-        val flow = getReposUsecase(page = 1, perPage = 10)
+        val flow = getReposUsecase(10)
 
         // Then
         flow.test {

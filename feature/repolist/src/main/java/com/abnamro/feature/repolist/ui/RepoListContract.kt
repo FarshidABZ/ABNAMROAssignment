@@ -14,14 +14,12 @@ internal sealed interface RepoListSingleEvent : MviSingleEvent {
 
 @Stable
 internal sealed interface RepoListIntent : MviIntent {
-    data object LoadInitial : RepoListIntent
-    data object LoadNextPage : RepoListIntent
+    data object LoadData : RepoListIntent
 }
 
 @Stable
 data class RepoListViewState(
     val repos: List<RepoUiModel> = emptyList(),
     val isLoading: Boolean = false,
-    val currentPage: Int = 0,
     val isLastPage: Boolean = false
 ) : MviViewState

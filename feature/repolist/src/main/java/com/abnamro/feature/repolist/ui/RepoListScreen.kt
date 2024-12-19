@@ -3,19 +3,14 @@ package com.abnamro.feature.repolist.ui
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Scaffold
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -23,7 +18,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,6 +26,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.abnamro.core.designsystem.component.PaginatedLazyColumn
 import com.abnamro.core.designsystem.component.RepoAvatar
 import com.abnamro.core.designsystem.component.TopBar
 import com.abnamro.core.designsystem.component.VisibilityChip
@@ -42,8 +37,6 @@ import com.abnamro.feature.repolist.model.RepoUiModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-
-private const val PAGINATION_THRESHOLD = 8
 
 @Composable
 internal fun RepoListRoute(
@@ -116,61 +109,15 @@ private fun RepositoryListContent(
     onRepoClicked: (Long) -> Unit
 ) {
     Box(modifier = Modifier.padding(paddingValues)) {
-        RepoList(
-            repos = viewState.repos,
-            isLoading = viewState.isLoading,
-            listState = listState,
-            onRepoClicked = onRepoClicked
-        )
-
-        HandlePagination(
+        PaginatedLazyColumn(
+            items = viewState.repos,
+            loadMoreItems = { onAction(RepoListIntent.LoadData) },
             listState = listState,
             isLoading = viewState.isLoading,
-            onLoadNextPage = { onAction(RepoListIntent.LoadNextPage) }
-        )
-    }
-}
-
-@Composable
-private fun HandlePagination(
-    listState: LazyListState,
-    isLoading: Boolean,
-    onLoadNextPage: () -> Unit
-) {
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.firstVisibleItemIndex }
-            .collect {
-                val itemCount = listState.layoutInfo.totalItemsCount
-                if (itemCount > PAGINATION_THRESHOLD &&
-                    it >= itemCount - PAGINATION_THRESHOLD &&
-                    !isLoading
-                ) {
-                    onLoadNextPage()
-                }
+            itemContent = { repo ->
+                RepoItem(repo = repo, onRepoClicked = onRepoClicked)
             }
-    }
-}
-
-@Composable
-private fun RepoList(
-    repos: List<RepoUiModel>,
-    isLoading: Boolean,
-    listState: LazyListState,
-    onRepoClicked: (Long) -> Unit
-) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-        state = listState,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        items(repos) { repo ->
-            RepoItem(repo = repo, onRepoClicked = onRepoClicked)
-        }
-        if (isLoading) {
-            item { CircularProgressIndicator() }
-        }
+        )
     }
 }
 
@@ -277,7 +224,15 @@ private fun RepoListPreview() {
     val repoList = List(10) { repo }
 
     ABNAmroAssignmentTheme {
-        RepoList(repoList, false, rememberLazyListState()) { }
+        PaginatedLazyColumn(
+            items = repoList,
+            isLoading = false,
+            listState = rememberLazyListState(),
+            loadMoreItems = {},
+            itemContent = { repo ->
+                RepoItem(repo = repo, onRepoClicked = { })
+            }
+        )
     }
 }
 

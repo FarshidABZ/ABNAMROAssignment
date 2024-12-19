@@ -1,6 +1,6 @@
 package com.abnamro.core.data.di
 
-import com.abnamro.core.data.database.RepoDao
+import com.abnamro.core.data.database.AppDatabase
 import com.abnamro.core.data.network.api.GithubApiService
 import com.abnamro.core.data.repository.RepoRepositoryImpl
 import com.abnamro.core.domain.repository.RepoRepository
@@ -17,7 +17,7 @@ object RepositoryModule {
     @Singleton
     fun provideRepository(
         remoteDataSource: GithubApiService,
-        localDataSource: RepoDao,
+        localDataSource: AppDatabase,
     ): RepoRepository =
         RepoRepositoryImpl(remoteDataSource, localDataSource)
 }

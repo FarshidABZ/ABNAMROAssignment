@@ -5,8 +5,6 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.abnamro.core.data.database.AppDatabase
 import com.abnamro.core.data.database.RepoDao
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
@@ -31,7 +29,7 @@ class RepoDaoTest {
             ApplicationProvider.getApplicationContext(),
             AppDatabase::class.java
         ).allowMainThreadQueries().build()
-        repoDao = database.dao()
+        repoDao = database.repoDao
     }
 
     @After
@@ -43,7 +41,7 @@ class RepoDaoTest {
     fun insertRepo_getById_verifyTheRepo() = runTest {
         val item = givenRepoEntity()
 
-        repoDao.insertRepos(listOf(item))
+        repoDao.upsertAll(listOf(item))
         val result = repoDao.getRepoById(item.id)
 
         assertThat(result, `is`(notNullValue()))
@@ -54,8 +52,8 @@ class RepoDaoTest {
     fun insertRepo_getAll_verifyOnlyOneAdded() = runTest {
         val item = givenRepoEntity()
 
-        repoDao.insertRepos(listOf(item))
-        val result = repoDao.getAllRepos().firstOrNull()
+        repoDao.upsertAll(listOf(item))
+        val result = repoDao.getAllRepos()
 
         assertThat(result, `is`(notNullValue()))
         assertThat(result?.size, `is`(1))
@@ -65,8 +63,8 @@ class RepoDaoTest {
     fun insertRepos_getAll_verifyAllAddedAndExist() = runTest {
         val repos = givenRepoEntityList()
 
-        repoDao.insertRepos(repos)
-        val result = repoDao.getAllRepos().firstOrNull()
+        repoDao.upsertAll(repos)
+        val result = repoDao.getAllRepos()
 
         assertThat(result, `is`(notNullValue()))
         assertEquals(result!!.size, 2)
@@ -77,11 +75,11 @@ class RepoDaoTest {
     @Test
     fun clearRepos_verifyClearsAllData() = runTest {
         val repos = givenRepoEntityList()
-        repoDao.insertRepos(repos)
+        repoDao.upsertAll(repos)
 
         repoDao.clearRepos()
-        val result = repoDao.getAllRepos().first()
+        val result = repoDao.getAllRepos()
 
-        assertTrue(result.isEmpty())
+        assertTrue(result!!.isEmpty())
     }
 }

@@ -20,35 +20,34 @@ internal class RepoListViewModel @Inject constructor(
     override val viewState = _viewState.asStateFlow()
 
     init {
-        processIntent(RepoListIntent.LoadInitial)
+        processIntent(RepoListIntent.LoadData)
     }
 
     override fun processIntent(intent: RepoListIntent) {
         when (intent) {
-            RepoListIntent.LoadInitial -> loadData(1)
-            RepoListIntent.LoadNextPage -> loadData(_viewState.value.currentPage + 1)
+            RepoListIntent.LoadData -> loadData()
         }
     }
 
-    private fun loadData(page: Int) {
-        if (_viewState.value.isLoading) return
-        if (_viewState.value.isLastPage) return
+    private fun loadData() {
+        if (_viewState.value.isLoading || _viewState.value.isLastPage) return
 
         viewModelScope.launch {
             _viewState.update { it.copy(isLoading = true) }
-            val result = getReposUseCase(page, perPage = 10)
 
-            result.collect { res ->
-                when (res) {
+            getReposUseCase(perPage = 10).collect { result ->
+                when (result) {
                     is Result.Success -> {
-                        _viewState.update { currentState ->
-                            val newRepos = res.data.map { it.toUIModel() }
-                            currentState.copy(
-                                repos = currentState.repos + newRepos,
-                                isLoading = false,
-                                currentPage = page,
-                                isLastPage = newRepos.isEmpty()
-                            )
+                        if(result.isLastPage == true || result.data.isEmpty()) {
+                            _viewState.update { it.copy(isLastPage = true, isLoading = false) }
+                        } else {
+                            _viewState.update { currentState ->
+                                currentState.copy(
+                                    repos = result.data.map { it.toUIModel() },
+                                    isLoading = false,
+                                    isLastPage = false
+                                )
+                            }
                         }
                     }
 
@@ -56,7 +55,7 @@ internal class RepoListViewModel @Inject constructor(
                         _viewState.update { it.copy(isLoading = false) }
                         sendSingleEvent(
                             RepoListSingleEvent.ShowError(
-                                res.exception?.message ?: "Unknown error"
+                                result.exception?.message ?: "Unknown error"
                             )
                         )
                     }

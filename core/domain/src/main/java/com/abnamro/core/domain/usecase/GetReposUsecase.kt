@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetReposUsecase @Inject constructor(private val repository: RepoRepository) {
-    operator fun invoke(page: Int, perPage: Int): Flow<Result<List<RepoBO>>> {
-        return repository.getRepos(page, perPage)
+    operator fun invoke(perPage: Int): Flow<Result<List<RepoBO>>> {
+        return repository.getRepos(perPage)
     }
 }

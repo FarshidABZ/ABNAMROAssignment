@@ -43,6 +43,7 @@ dependencies {
     api(libs.androidx.constraintLayout.compose)
     api(libs.androidx.appcompat)
     api(libs.coil)
+    api(libs.kotlin.collections)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

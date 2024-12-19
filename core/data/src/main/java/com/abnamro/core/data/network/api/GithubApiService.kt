@@ -9,6 +9,6 @@ interface GithubApiService {
     @GET("/users/abnamrocoesd/repos")
     suspend fun getRepos(
         @Query("page") page: Int,
-        @Query("per_page") perPage: Int
+        @Query("per_page") perPage: Int = 10
     ): Response<List<RepoDTO>>
 }

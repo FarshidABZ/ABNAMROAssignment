@@ -47,6 +47,8 @@ dependencies {
 
     implementation(libs.kotlinx.serialization.json)
 
+    implementation(libs.androidx.paging)
+
     // Network
     implementation(platform(libs.okhttp.bom))
     implementation(libs.okhttp)

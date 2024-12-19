@@ -8,19 +8,21 @@ minSdk = "24"
 #Android
 androidxRoom = "2.6.1"
 androidxCoreKtx = "1.15.0"
-lifecycle-runtime-ktx = "2.8.2"
+lifecycle-runtime-ktx = "2.8.7"
+paging = "3.1.0"
 
 #Kotlin
 kotlin = "2.1.0"
 kotlinxCoroutines = "1.9.0"
 ksp = "2.1.0-1.0.29"
 kotlinxSerializationJson = "1.6.3"
+kotlin-collections = "0.3.7"
 
 #Compose
 androidxComposeBom = "2024.12.01"
 activity-compose = "1.9.3"
 compose-viewmodel = "2.8.7"
-compose-material = "1.6.8"
+compose-material = "1.7.6"
 
 #Hilt
 hilt = "2.52"
@@ -43,8 +45,8 @@ androidx-test-ext-junit = "1.2.1"
 mockk = "1.13.12"
 turbine = "1.2.0"
 androidxTestRunner = "1.6.2"
-espressoCore = "3.5.1"
-material = "1.10.0"
+espressoCore = "3.6.1"
+material = "1.12.0"
 uiTooling = "1.7.6"
 
 
@@ -53,6 +55,7 @@ uiTooling = "1.7.6"
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+kotlin-collections = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlin-collections" }
 
 ## Compose
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
@@ -85,6 +88,8 @@ androidx-room-testing = { group = "androidx.room", name = "room-testing", versio
 ## Android
 androidx-constraintLayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintLayout" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppCompat" }
+androidx-paging = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 
 ## Network
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
@@ -100,7 +105,7 @@ coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 ## Test
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk"}
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCoreKtx" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
