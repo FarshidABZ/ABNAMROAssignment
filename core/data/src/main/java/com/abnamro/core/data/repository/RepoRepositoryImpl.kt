@@ -76,7 +76,7 @@ class RepoRepositoryImpl @Inject constructor(
     private suspend fun loadFromDb() =
         localDataSource.repoDao.getAllRepos()?.map { it.toDomain() }.orEmpty()
 
-    override suspend fun getRepoDetail(id: Int): Result<RepoBO> {
-        TODO("Not yet implemented")
+    override suspend fun getRepoDetail(id: Long): Result<RepoBO> {
+        return Result.Success(localDataSource.repoDao.getRepoById(id).toDomain())
     }
 }

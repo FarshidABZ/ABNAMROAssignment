@@ -23,7 +23,7 @@ import com.abnamro.core.designsystem.R
 @Composable
 fun TopBar(
     title: String,
-    tintColor: Color = MaterialTheme.colorScheme.onPrimary,
+    tintColor: Color = MaterialTheme.colorScheme.onPrimaryContainer,
     onNavigationClicked: (() -> Unit)? = null
 ) {
     CenterAlignedTopAppBar(

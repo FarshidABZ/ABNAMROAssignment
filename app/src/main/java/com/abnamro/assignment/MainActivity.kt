@@ -9,6 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.abnamro.core.designsystem.theme.ABNAmroAssignmentTheme
+import com.abnamro.feature.repodetail.navigation.navigateToRepoDetail
+import com.abnamro.feature.repodetail.navigation.repoDetailScreen
 import com.abnamro.feature.repolist.navigation.REPO_LIST_ROUTE
 import com.abnamro.feature.repolist.navigation.repoListScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +35,7 @@ fun ABNAmroApp(
     startDestination: String = REPO_LIST_ROUTE,
 ) {
     NavHost(navController = navController, startDestination = startDestination) {
-        repoListScreen(onRepoClicked = { })
+        repoListScreen(onRepoClicked = { navController.navigateToRepoDetail(it) })
+        repoDetailScreen(onBackClicked = { navController.popBackStack() })
     }
 }

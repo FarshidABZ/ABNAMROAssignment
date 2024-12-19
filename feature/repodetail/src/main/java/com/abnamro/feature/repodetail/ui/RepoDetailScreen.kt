@@ -1,14 +1,11 @@
-package com.abnamro.feature.repolist.ui
+package com.abnamro.feature.repodetail.ui
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -26,44 +23,41 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.abnamro.core.designsystem.component.PaginatedLazyColumn
 import com.abnamro.core.designsystem.component.RepoAvatar
 import com.abnamro.core.designsystem.component.TopBar
 import com.abnamro.core.designsystem.component.VisibilityChip
+import com.abnamro.core.designsystem.component.WebButton
 import com.abnamro.core.designsystem.theme.ABNAmroAssignmentTheme
 import com.abnamro.core.domain.model.VisibilityState
-import com.abnamro.feature.repolist.R
-import com.abnamro.base.R as BaseR
-import com.abnamro.feature.repolist.model.RepoUiModel
+import com.abnamro.feature.repodetail.R
+import com.abnamro.feature.repodetail.model.RepoDetailUiModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import com.abnamro.base.R as BaseR
 
 
 @Composable
-internal fun RepoListRoute(
-    onRepoClicked: (Long) -> Unit,
-    viewModel: RepoListViewModel = hiltViewModel()
+internal fun RepoDetailRoute(
+    onBackClicked: () -> Unit,
+    viewModel: RepoDetailViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
-    val singleEvent by viewModel.singleEvent.collectAsStateWithLifecycle(RepoListSingleEvent.NoEvent)
-    val listState = rememberLazyListState()
+    val singleEvent by viewModel.singleEvent.collectAsStateWithLifecycle(RepoDetailSingleEvent.NoEvent)
 
-    RepoListScreen(
+    RepoDetailScreen(
         viewState = viewState,
         singleEvent = singleEvent,
-        listState = listState,
         onAction = viewModel::processIntent,
-        onRepoClicked = onRepoClicked
+        onBackClicked = onBackClicked
     )
 }
 
 @Composable
-private fun RepoListScreen(
-    viewState: RepoListViewState,
-    singleEvent: RepoListSingleEvent,
-    listState: LazyListState,
-    onAction: (RepoListIntent) -> Unit,
-    onRepoClicked: (Long) -> Unit
+private fun RepoDetailScreen(
+    viewState: RepoDetailViewState,
+    singleEvent: RepoDetailSingleEvent,
+    onAction: (RepoDetailIntent) -> Unit,
+    onBackClicked: () -> Unit
 ) {
     val coroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -73,14 +67,16 @@ private fun RepoListScreen(
     ABNAmroAssignmentTheme {
         Scaffold(
             snackbarHost = { SnackbarHost(snackbarHostState) },
-            topBar = { TopBar(stringResource(R.string.repo_list)) }
+            topBar = {
+                TopBar(
+                    viewState.repo?.name ?: stringResource(R.string.repo_details),
+                    onNavigationClicked = onBackClicked
+                )
+            }
         ) { paddingValues ->
-            RepositoryListContent(
+            RepositoryDetailContent(
                 paddingValues = paddingValues,
                 viewState = viewState,
-                listState = listState,
-                onAction = onAction,
-                onRepoClicked = onRepoClicked
             )
         }
     }
@@ -88,12 +84,12 @@ private fun RepoListScreen(
 
 @Composable
 private fun HandleSingleEvent(
-    singleEvent: RepoListSingleEvent,
+    singleEvent: RepoDetailSingleEvent,
     snackbarHostState: SnackbarHostState,
     coroutineScope: CoroutineScope
 ) {
     LaunchedEffect(singleEvent) {
-        if (singleEvent is RepoListSingleEvent.ShowError) {
+        if (singleEvent is RepoDetailSingleEvent.ShowError) {
             coroutineScope.launch {
                 snackbarHostState.showSnackbar(singleEvent.message)
             }
@@ -102,39 +98,28 @@ private fun HandleSingleEvent(
 }
 
 @Composable
-private fun RepositoryListContent(
+private fun RepositoryDetailContent(
     paddingValues: PaddingValues,
-    viewState: RepoListViewState,
-    listState: LazyListState,
-    onAction: (RepoListIntent) -> Unit,
-    onRepoClicked: (Long) -> Unit
+    viewState: RepoDetailViewState,
 ) {
     Box(modifier = Modifier.padding(paddingValues)) {
-        PaginatedLazyColumn(
-            items = viewState.repos,
-            loadMoreItems = { onAction(RepoListIntent.LoadData) },
-            listState = listState,
-            isLoading = viewState.isLoading,
-            itemContent = { repo ->
-                RepoItem(repo = repo, onRepoClicked = onRepoClicked)
-            }
-        )
+        viewState.repo?.let {
+            RepoDetail(repo = viewState.repo)
+        }
     }
 }
 
 @Composable
-private fun RepoItem(
-    repo: RepoUiModel,
-    onRepoClicked: (Long) -> Unit
+private fun RepoDetail(
+    repo: RepoDetailUiModel,
 ) {
     ConstraintLayout(
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
-            .clickable { onRepoClicked(repo.id) }
             .padding(16.dp)
     ) {
-        val (avatar, title, ownerName, description, visibilityChip, privateChip) = createRefs()
+        val (avatar, title, ownerName, description, visibilityChip, privateChip, extLinkRef) = createRefs()
 
         RepoAvatar(
             imageUrl = repo.ownerAvatarUrl,
@@ -204,13 +189,24 @@ private fun RepoItem(
                 start.linkTo(visibilityChip.end, margin = 8.dp)
             }
         )
+
+        WebButton(
+            modifier = Modifier.constrainAs(extLinkRef) {
+                top.linkTo(visibilityChip.bottom, margin = 8.dp)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                width = Dimension.fillToConstraints
+            },
+            externalURL = repo.htmlUrl.orEmpty(),
+            text = stringResource(id = R.string.view_on_github)
+        )
     }
 }
 
 @Preview(showSystemUi = true)
 @Composable
-private fun RepoListPreview() {
-    val repo = RepoUiModel(
+private fun RepoDetailPreview() {
+    val repo = RepoDetailUiModel(
         1,
         "Repo Name",
         "Owner",
@@ -222,24 +218,14 @@ private fun RepoListPreview() {
         "htmlUrl"
     )
 
-    val repoList = List(10) { repo }
-
     ABNAmroAssignmentTheme {
-        PaginatedLazyColumn(
-            items = repoList,
-            isLoading = false,
-            listState = rememberLazyListState(),
-            loadMoreItems = {},
-            itemContent = { repo ->
-                RepoItem(repo = repo, onRepoClicked = { })
-            }
-        )
+        RepoDetail(repo)
     }
 }
 
 
 @Preview(showSystemUi = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
-private fun RepoListDarkModePreview() {
-    RepoListPreview()
+private fun RepoDetailDarkModePreview() {
+    RepoDetailPreview()
 }

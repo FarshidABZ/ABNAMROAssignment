@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface RepoRepository {
     fun getRepos(pageSize: Int = 10): Flow<Result<List<RepoBO>>>
-    suspend fun getRepoDetail(id: Int): Result<RepoBO>
+    suspend fun getRepoDetail(id: Long): Result<RepoBO>
 }
