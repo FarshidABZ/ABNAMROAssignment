@@ -74,7 +74,10 @@ ABNAMROAssignment/
 
 ## Videos
 This section contains different videos showcasing the working application.
-*(Add links to demo videos here)*
+- **Dark Mode**: [DarkMode.mp4](https://github.com/FarshidABZ/ABNAMROAssignment/tree/main/videos/DarkMode.mp4)
+- **Navigation**: [Navigation.mp4](https://github.com/FarshidABZ/ABNAMROAssignment/tree/main/videos/Navigation.mp4)
+- **Offline-First**: [OfflineFirst.mp4](https://github.com/FarshidABZ/ABNAMROAssignment/tree/main/videos/OfflineFirst.mp4)
+- **Pagination**: [Pagination.mp4](https://github.com/FarshidABZ/ABNAMROAssignment/tree/main/videos/Pagination.mp4)
 
 ---
 
